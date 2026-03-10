@@ -1,0 +1,9 @@
+{
+  "name": "martinbaud.github.io",
+  "version": "1.0.0",
+  "description": "Portfolio website",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "devDependencies": {}
+}
