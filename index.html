@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>martinbaud | Portfolio</title>
+  <link rel="icon" href="https://minecraft.wiki/images/Invicon_Diamond_Pickaxe.png">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg-dark: #1a1a2e;
+      --bg-card: #2d2d44;
+      --border-light: #4a4a6a;
+      --border-dark: #1a1a2e;
+      --text: #e0e0e0;
+      --accent-green: #00ff88;
+      --accent-blue: #00d4ff;
+      --accent-gold: #ffd700;
+      --accent-red: #ff6b6b;
+    }
+
+    body {
+      font-family: 'VT323', monospace;
+      background: var(--bg-dark);
+      color: var(--text);
+      min-height: 100vh;
+      image-rendering: pixelated;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    /* Header */
+    header {
+      text-align: center;
+      padding: 40px 0;
+      border-bottom: 4px solid var(--border-light);
+      margin-bottom: 40px;
+    }
+
+    .avatar {
+      width: 80px;
+      height: 80px;
+      border: 4px solid var(--accent-gold);
+      image-rendering: pixelated;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    h1 {
+      font-size: 3rem;
+      color: var(--accent-green);
+      text-shadow: 4px 4px 0 #006644;
+      margin: 20px 0 10px;
+    }
+
+    .tagline {
+      font-size: 1.5rem;
+      color: var(--accent-blue);
+    }
+
+    /* Section */
+    section {
+      margin-bottom: 40px;
+    }
+
+    h2 {
+      font-size: 2rem;
+      color: var(--accent-gold);
+      border-bottom: 3px solid var(--border-light);
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    h2 img {
+      width: 32px;
+      height: 32px;
+      image-rendering: pixelated;
+    }
+
+    /* Project Grid */
+    .projects {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .project {
+      background: var(--bg-card);
+      border: 4px solid var(--border-light);
+      border-radius: 4px;
+      padding: 20px;
+      transition: transform 0.2s, border-color 0.2s;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project:hover {
+      transform: translateY(-5px);
+      border-color: var(--accent-green);
+    }
+
+    .project-icon {
+      width: 48px;
+      height: 48px;
+      image-rendering: pixelated;
+      margin-bottom: 15px;
+      animation: bob 2s ease-in-out infinite;
+    }
+
+    @keyframes bob {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      25% { transform: translateY(-3px) rotate(-2deg); }
+      75% { transform: translateY(-3px) rotate(2deg); }
+    }
+
+    .project:nth-child(2) .project-icon { animation-delay: 0.3s; }
+    .project:nth-child(3) .project-icon { animation-delay: 0.6s; }
+    .project:nth-child(4) .project-icon { animation-delay: 0.9s; }
+    .project:nth-child(5) .project-icon { animation-delay: 1.2s; }
+
+    .project h3 {
+      font-size: 1.4rem;
+      color: var(--accent-green);
+      margin-bottom: 8px;
+    }
+
+    .project p {
+      font-size: 1.1rem;
+      color: #aaa;
+      margin-bottom: 10px;
+    }
+
+    .project .status {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 3px;
+      font-size: 1rem;
+      background: var(--bg-dark);
+    }
+
+    .status.production { color: var(--accent-green); border: 2px solid var(--accent-green); }
+    .status.alpha { color: var(--accent-gold); border: 2px solid var(--accent-gold); }
+    .status.wip { color: var(--accent-blue); border: 2px solid var(--accent-blue); }
+    .status.blocked { color: var(--accent-red); border: 2px solid var(--accent-red); }
+
+    /* Particles */
+    .particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: var(--accent-green);
+      opacity: 0.3;
+      animation: fall linear infinite;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(-10px) rotate(0deg); opacity: 0; }
+      10% { opacity: 0.3; }
+      90% { opacity: 0.3; }
+      100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 30px;
+      border-top: 4px solid var(--border-light);
+      margin-top: 40px;
+    }
+
+    footer a {
+      color: var(--accent-blue);
+      text-decoration: none;
+      font-size: 1.3rem;
+      margin: 0 15px;
+      transition: color 0.2s;
+    }
+
+    footer a:hover {
+      color: var(--accent-green);
+    }
+
+    .tech-stack {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .tech {
+      background: var(--bg-card);
+      padding: 5px 12px;
+      border: 2px solid var(--border-light);
+      border-radius: 3px;
+      font-size: 1rem;
+      color: #888;
+    }
+
+    /* Crafting hint */
+    .hint {
+      text-align: center;
+      color: #666;
+      font-size: 1.1rem;
+      margin-top: 10px;
+    }
+
+    .hint a {
+      color: var(--accent-gold);
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="particles" id="particles"></div>
+
+  <div class="container">
+    <header>
+      <img src="https://github.com/martinbaud.png" alt="martinbaud" class="avatar">
+      <h1>martinbaud</h1>
+      <p class="tagline">Software craftsman · Retro game archaeologist</p>
+    </header>
+
+    <section>
+      <h2>
+        <img src="https://minecraft.wiki/images/Invicon_Ender_Eye.png" alt="globe">
+        Pro — AeryFlux
+      </h2>
+      <p style="margin-bottom: 20px; color: #888; font-size: 1.2rem;">
+        Interactive globe experiences with NLP
+      </p>
+      <div class="projects">
+        <a href="https://github.com/martinbaud/geojsonto3D" class="project" target="_blank">
+          <img src="https://minecraft.wiki/images/Invicon_Globe_Banner_Pattern.png" alt="globe" class="project-icon">
+          <h3>geojsonto3D</h3>
+          <p>GeoJSON → 3D globe models</p>
+          <span class="status production">Production</span>
+        </a>
+        <a href="https://github.com/aeryflux/lumos" class="project" target="_blank">
+          <img src="https://minecraft.wiki/images/Invicon_Lantern.png" alt="lumos" class="project-icon">
+          <h3>lumos</h3>
+          <p>Landing page</p>
+          <span class="status alpha">Alpha</span>
+        </a>
+        <a href="https://github.com/aeryflux/globe" class="project" target="_blank">
+          <img src="https://minecraft.wiki/images/Invicon_Heart_of_the_Sea.png" alt="globe" class="project-icon">
+          <h3>@aeryflux/globe</h3>
+          <p>npm package</p>
+          <span class="status alpha">Alpha</span>
+        </a>
+        <a href="https://github.com/aeryflux/haki" class="project" target="_blank">
+          <img src="https://minecraft.wiki/images/Invicon_Book_and_Quill.png" alt="haki" class="project-icon">
+          <h3>haki</h3>
+          <p>Learn-to-code platform</p>
+          <span class="status alpha">Alpha</span>
+        </a>
+      </div>
+    </section>
+
+    <section>
+      <h2>
+        <img src="https://minecraft.wiki/images/Invicon_Diamond_Pickaxe.png" alt="pickaxe">
+        Hobby — Game Servers
+      </h2>
+      <div class="projects">
+        <a href="https://github.com/martinbaud/aof6_server" class="project" target="_blank">
+          <img src="https://minecraft.wiki/images/Invicon_Grass_Block.png" alt="minecraft" class="project-icon">
+          <h3>aof6_server</h3>
+          <p>All of Fabric 6 modpack</p>
+          <span class="status production">Railway</span>
+        </a>
+        <a href="https://github.com/martinbaud/palworld-server-docker" class="project" target="_blank">
+          <img src="https://minecraft.wiki/images/Invicon_Dragon_Egg.png" alt="palworld" class="project-icon">
+          <h3>palworld-server</h3>
+          <p>Docker container</p>
+          <span class="status blocked">UDP blocked</span>
+        </a>
+        <a href="https://github.com/martinbaud/EnhancedSC" class="project" target="_blank">
+          <img src="https://minecraft.wiki/images/Invicon_Spyglass.png" alt="splinter cell" class="project-icon">
+          <h3>EnhancedSC</h3>
+          <p>2-player coop mod</p>
+          <span class="status wip">PR Pending</span>
+        </a>
+      </div>
+    </section>
+
+    <section>
+      <h2>
+        <img src="https://minecraft.wiki/images/Invicon_Compass.png" alt="research">
+        Research
+      </h2>
+      <div class="projects">
+        <a href="https://sim2team.github.io/" class="project" target="_blank">
+          <img src="https://minecraft.wiki/images/Invicon_Map.png" alt="urbz" class="project-icon">
+          <h3>UrbzMMO</h3>
+          <p>GBA reverse engineering</p>
+          <span class="status wip">Research</span>
+        </a>
+        <a href="https://en.wikipedia.org/wiki/City_Building_(series)" class="project" target="_blank">
+          <img src="https://minecraft.wiki/images/Invicon_Bricks.png" alt="city builders" class="project-icon">
+          <h3>City Builders</h3>
+          <p>Impressions Games engines</p>
+          <span class="status wip">Research</span>
+        </a>
+      </div>
+    </section>
+
+    <footer>
+      <a href="https://github.com/martinbaud" target="_blank">GitHub</a>
+      <a href="https://github.com/aeryflux" target="_blank">AeryFlux</a>
+
+      <div class="tech-stack">
+        <span class="tech">TypeScript</span>
+        <span class="tech">Three.js</span>
+        <span class="tech">Hono</span>
+        <span class="tech">Docker</span>
+        <span class="tech">Railway</span>
+      </div>
+
+      <p class="hint" style="margin-top: 20px;">
+        Try the <a href="https://github.com/martinbaud" target="_blank">crafting table</a> on my GitHub profile
+      </p>
+    </footer>
+  </div>
+
+  <script>
+    // Create falling particles
+    const particlesContainer = document.getElementById('particles');
+    const colors = ['#00ff88', '#00d4ff', '#ffd700'];
+
+    for (let i = 0; i < 30; i++) {
+      const particle = document.createElement('div');
+      particle.className = 'particle';
+      particle.style.left = Math.random() * 100 + '%';
+      particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+      particle.style.animationDelay = (Math.random() * 10) + 's';
+      particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+      particlesContainer.appendChild(particle);
+    }
+  </script>
+</body>
+</html>
