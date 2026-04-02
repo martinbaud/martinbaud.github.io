@@ -20,26 +20,25 @@ function assert(condition, message) {
   if (!condition) throw new Error(message);
 }
 
-console.log('\nPortfolio Tests\n');
-
-// HTML Structure Tests
-console.log('HTML Structure:');
 const html = fs.readFileSync('index.html', 'utf8');
+
+// ============================================================================
+console.log('\nHTML Structure:\n');
 
 test('has DOCTYPE', () => {
   assert(html.startsWith('<!DOCTYPE html>'), 'Missing DOCTYPE');
 });
 
 test('has html lang attribute', () => {
-  assert(html.includes('<html lang="en">'), 'Missing or incorrect lang attribute');
+  assert(html.includes('<html lang="en">'), 'Missing lang attribute');
 });
 
 test('has meta charset', () => {
-  assert(html.includes('charset="UTF-8"'), 'Missing charset meta');
+  assert(html.includes('charset="UTF-8"'), 'Missing charset');
 });
 
 test('has meta viewport', () => {
-  assert(html.includes('name="viewport"'), 'Missing viewport meta');
+  assert(html.includes('name="viewport"'), 'Missing viewport');
 });
 
 test('has title', () => {
@@ -50,45 +49,138 @@ test('has favicon', () => {
   assert(html.includes('rel="icon"'), 'Missing favicon');
 });
 
-// Content Tests
-console.log('\nContent:');
-
-test('has header with name', () => {
-  assert(html.includes('martinbaud'), 'Missing name in header');
+test('has VT323 font', () => {
+  assert(html.includes('VT323'), 'Missing Minecraft font VT323');
 });
 
-test('has Pro section', () => {
-  assert(html.includes('Pro — AeryFlux'), 'Missing Pro section');
+// ============================================================================
+console.log('\nHeader:\n');
+
+test('has name Martin Baud', () => {
+  assert(html.includes('Martin Baud'), 'Missing name');
 });
 
-test('has Hobby section', () => {
-  assert(html.includes('Hobby — Game Servers'), 'Missing Hobby section');
+test('has tagline', () => {
+  assert(html.includes('OSS Builder'), 'Missing tagline');
 });
 
-test('has Research section', () => {
-  assert(html.includes('Research'), 'Missing Research section');
+test('has avatar from GitHub', () => {
+  assert(html.includes('github.com/martinbaud.png'), 'Missing GitHub avatar');
 });
 
-test('has footer with links', () => {
-  assert(html.includes('github.com/martinbaud'), 'Missing GitHub link');
-  assert(html.includes('github.com/aeryflux'), 'Missing AeryFlux link');
-  assert(html.includes('npmjs.com/org/aeryflux'), 'Missing npm link');
+test('has portal button', () => {
+  assert(html.includes('Enter Portal'), 'Missing portal button');
 });
 
-// Asset Tests
-console.log('\nAssets:');
+test('has download CV button', () => {
+  assert(html.includes('Download CV'), 'Missing CV button');
+});
+
+// ============================================================================
+console.log('\nContact & Social Links:\n');
+
+const socials = [
+  { name: 'email', match: 'martinbaud.git@gmail.com' },
+  { name: 'location', match: 'Paris, France' },
+  { name: 'GitHub', match: 'github.com/martinbaud' },
+  { name: 'LinkedIn', match: 'linkedin.com/in/martinbaud' },
+  { name: 'X/Twitter', match: 'x.com/martiin_bd' },
+  { name: 'Instagram', match: 'instagram.com/_tiinmar_' },
+  { name: 'SoundCloud', match: 'soundcloud.com/shaka-5555' },
+];
+
+socials.forEach(s => {
+  test(`has ${s.name}`, () => {
+    assert(html.includes(s.match), `Missing ${s.name}: ${s.match}`);
+  });
+});
+
+// ============================================================================
+console.log('\nCV Sections:\n');
+
+test('has Profile section', () => {
+  assert(html.includes('Profile'), 'Missing Profile section');
+});
+
+test('has Experience section', () => {
+  assert(html.includes('Experience'), 'Missing Experience section');
+});
+
+test('has Internships section', () => {
+  assert(html.includes('Internships'), 'Missing Internships section');
+});
+
+test('has Education section', () => {
+  assert(html.includes('Education'), 'Missing Education section');
+});
+
+// ============================================================================
+console.log('\nExperience Entries:\n');
+
+const experiences = [
+  { name: 'AeryFlux', match: 'AeryFlux' },
+  { name: 'Wizards Reply', match: 'Wizards Reply' },
+  { name: 'Le Monde', match: 'Le Monde' },
+  { name: 'Agryco', match: 'Agryco' },
+  { name: 'Akuo Energy', match: 'Akuo Energy' },
+  { name: 'SFAF', match: 'SFAF' },
+  { name: 'Epitech', match: 'Epitech' },
+  { name: 'Ahlia University', match: 'Ahlia University' },
+];
+
+experiences.forEach(e => {
+  test(`has ${e.name}`, () => {
+    assert(html.includes(e.match), `Missing experience: ${e.name}`);
+  });
+});
+
+// ============================================================================
+console.log('\nSkills:\n');
+
+const skills = ['TypeScript', 'React', 'React Native', 'Three.js', 'Expo',
+  'Node.js', 'Express', 'PostgreSQL', 'Blender', 'Python', 'Docker'];
+
+skills.forEach(skill => {
+  test(`has ${skill}`, () => {
+    assert(html.includes(skill), `Missing skill: ${skill}`);
+  });
+});
+
+// ============================================================================
+console.log('\nProject Cards:\n');
+
+const projects = [
+  { name: 'Atlas', url: 'atlas.aeryflux.com' },
+  { name: 'geojsonto3D', url: 'github.com/martinbaud/geojsonto3D' },
+  { name: '@aeryflux/globe', url: 'npmjs.com/package/@aeryflux/globe' },
+  { name: '@aeryflux/xenova-bridge', url: 'npmjs.com/package/@aeryflux/xenova-bridge' },
+  { name: 'lumos', url: 'aeryflux.com' },
+  { name: 'haki', url: 'haki.aeryflux.com' },
+  { name: 'aof6_server', url: 'github.com/martinbaud/aof6_server' },
+  { name: 'palworld-server', url: 'github.com/martinbaud/palworld-server-docker' },
+  { name: 'EnhancedSC', url: 'github.com/martinbaud/EnhancedSC' },
+];
+
+projects.forEach(p => {
+  test(`${p.name} card with link`, () => {
+    assert(html.includes(p.url), `Missing project link: ${p.name} (${p.url})`);
+  });
+});
+
+// ============================================================================
+console.log('\nAssets:\n');
+
 const assetsDir = path.join(__dirname, 'assets');
 
-// Extract all local image paths from HTML
+test('assets directory exists', () => {
+  assert(fs.existsSync(assetsDir), 'Assets directory missing');
+});
+
 const imgMatches = html.match(/src="assets\/[^"]+"/g) || [];
 const hrefMatches = html.match(/href="assets\/[^"]+"/g) || [];
 const localAssets = [...imgMatches, ...hrefMatches]
   .map(m => m.match(/"([^"]+)"/)[1])
   .filter((v, i, a) => a.indexOf(v) === i);
-
-test('assets directory exists', () => {
-  assert(fs.existsSync(assetsDir), 'Assets directory missing');
-});
 
 localAssets.forEach(asset => {
   test(`${asset} exists`, () => {
@@ -96,28 +188,45 @@ localAssets.forEach(asset => {
   });
 });
 
-// Project Links Tests
-console.log('\nProject Links:');
+// ============================================================================
+console.log('\nPDF Generation:\n');
 
-const expectedProjects = [
-  { name: 'geojsonto3D', url: 'github.com/martinbaud/geojsonto3D' },
-  { name: 'lumos', url: 'aeryflux.com' },
-  { name: '@aeryflux/globe', url: 'npmjs.com/package/@aeryflux/globe' },
-  { name: '@aeryflux/xenova-bridge', url: 'npmjs.com/package/@aeryflux/xenova-bridge' },
-  { name: 'haki', url: 'github.com/aeryflux/haki' },
-  { name: 'aof6_server', url: 'github.com/martinbaud/aof6_server' },
-  { name: 'palworld-server', url: 'github.com/martinbaud/palworld-server-docker' },
-  { name: 'EnhancedSC', url: 'github.com/martinbaud/EnhancedSC' },
-  { name: 'UrbzMMO', url: 'sim2team.github.io' },
+test('includes html2canvas', () => {
+  assert(html.includes('html2canvas'), 'Missing html2canvas library');
+});
+
+test('includes jsPDF', () => {
+  assert(html.includes('jspdf'), 'Missing jsPDF library');
+});
+
+test('has downloadPDF function', () => {
+  assert(html.includes('function downloadPDF'), 'Missing downloadPDF function');
+});
+
+test('print-hide hides Sandbox section', () => {
+  assert(html.includes('class="print-hide"'), 'Missing print-hide class');
+});
+
+// ============================================================================
+console.log('\nCompany Links:\n');
+
+const companyLinks = [
+  { name: 'Wizards Reply', url: 'wizards-reply.com' },
+  { name: 'Le Monde', url: 'lemonde.fr' },
+  { name: 'Agryco', url: 'agryco.com' },
+  { name: 'Akuo Energy', url: 'akuoenergy.com' },
+  { name: 'SFAF', url: 'sfaf.com' },
+  { name: 'Epitech', url: 'epitech.eu' },
+  { name: 'Ahlia University', url: 'ahlia.edu.bh' },
 ];
 
-expectedProjects.forEach(proj => {
-  test(`${proj.name} link present`, () => {
-    assert(html.includes(proj.url), `Missing link for ${proj.name}`);
+companyLinks.forEach(c => {
+  test(`${c.name} links to ${c.url}`, () => {
+    assert(html.includes(c.url), `Missing company link: ${c.url}`);
   });
 });
 
-// Summary
+// ============================================================================
 console.log('\n' + '─'.repeat(40));
 console.log(`\x1b[32m${passed} passed\x1b[0m, \x1b[31m${failed} failed\x1b[0m\n`);
 
